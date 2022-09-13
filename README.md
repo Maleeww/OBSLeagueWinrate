@@ -16,7 +16,7 @@ Modify the path according to your folder structure, this example is made assumin
 ## API Key
 
 You need a Riot Api key to be able to receive the game's data. You should get your own on the [Riot Developer Portal](https://developer.riotgames.com/).
-In order for the code to use your Api Key, modify the src/api.js file and replace 'YourApiKey' with the key provided by Riot.
+In order for the code to use your Api Key, modify the [src/api.js](https://github.com/Maleeww/OBSLeagueWinrate/blob/main/src/api.js) file and replace 'YourApiKey' with the key provided by Riot.
 
 ## In Progress
 
