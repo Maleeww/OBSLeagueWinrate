@@ -1,14 +1,18 @@
 
-var lastGameId = 0;
+var lastGameId = '0';
 
 async function check() {
-    var newId = apiGetLastGameId();
-    if (lastGameId == 0) {
+    var newId = await apiGetLastGameId();
+    console.log(newId);
+    if (lastGameId == "0") {
         lastGameId = newId;
         return false;
     }
     // Nuevo game detectado, se añade al buscador
-    if (lastGameId != newId) {
+    if (lastGameId.toString() === newId.toString())
+        return false
+    else {
+        console.log(lastGameId.toString() + ' no es igual a ' + newId.toString());
         lastGameId = newId;
         return true;
     }
@@ -21,25 +25,27 @@ function sleep(s) {
 
 // Rating Initialization
 window.onload = async function () {
+    apiInit();
     var changed = false;
     var modify;
     var id;
     //espera 30s
     //setTimeout(changed = check(), 30000);  
     while (true) {
-        await sleep(15); // segundos
-        changed = check();
+        await sleep(3); // segundos
+        changed = await check();
         if (changed) {
             changed = false;
 
-            var result = lastGameIsWin();
+            var result = await apiCheckLastResult();
 
-            if (result) //result==1, win
-            id = "wins";
+            if (result) //result==true, win
+                id = "wins";
             else id = "losses";
+
             modify = document.getElementById(id);
             var actual = parseInt(modify.innerHTML)
-            actual = actual+1;
+            actual = actual + 1;
             modify.innerHTML = actual;
         }
     }
