@@ -1,14 +1,14 @@
 
 // lose = 0
 // win = 1
-var apiKey = "RGAPI-283ec8c2-1864-4749-85ab-52696142d017";
+var apiKey = "RGAPI-8c44901a-cc5b-4138-800e-6fd7f2b7ba3b";
 //var lastGameIsWin = 1;
 var aux = 1;
 var region = "euw1";
 const baseUrl = "https://" + region + ".api.riotgames.com";
 var summoner;
-var summonerName = "Grekkø";
-var puuid = "rfxaAA6AhqREAroXvZl3rP5i5_Mzuu5u6EkLYQxBPTE0MtPzhS0MhzmtAG0yxNcs7zwCbwCTFgiYVw";
+var summonerName = "ZTS TheMalware" //"Grekkø";
+//var puuid = "rfxaAA6AhqREAroXvZl3rP5i5_Mzuu5u6EkLYQxBPTE0MtPzhS0MhzmtAG0yxNcs7zwCbwCTFgiYVw";
 
 function setRegion(newRegion) {
     region = newRegion;
@@ -17,6 +17,7 @@ function setRegion(newRegion) {
 
 function setSummonerName(newName) {
     summonerName = newName;
+    console.log("Summoner set to: "+newName)
     setSummoner();
 }
 
@@ -63,7 +64,8 @@ async function apiCheckLastResult() {
 
 }
 
-function apiInit() {
-    var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName;
-    summoner = requestUrl;
+function apiInit(summoner) {
+    //var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName;
+    //summoner = requestUrl;
+    setSummonerName(summoner);
 }

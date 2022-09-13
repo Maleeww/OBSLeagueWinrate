@@ -25,7 +25,10 @@ function sleep(s) {
 
 // Rating Initialization
 window.onload = async function () {
-    apiInit();
+    const params = new URLSearchParams(window.location.search);
+    var summonerName = "ZTS TheMalware"
+    if(params.has('name'))  summonerName = params.get("name")
+    apiInit(summonerName);
     var changed = false;
     var modify;
     var id;
