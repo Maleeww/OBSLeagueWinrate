@@ -26,7 +26,7 @@ function sleep(s) {
 // Rating Initialization
 window.onload = async function () {
     const params = new URLSearchParams(window.location.search);
-    var summonerName = "ZTS TheMalware"
+    var summonerName = "Grekkø"
     if(params.has('name'))  summonerName = params.get("name")
     apiInit(summonerName);
     var changed = false;

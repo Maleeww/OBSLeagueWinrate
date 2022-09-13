@@ -1,13 +1,13 @@
 
 // lose = 0
 // win = 1
-var apiKey = "RGAPI-8c44901a-cc5b-4138-800e-6fd7f2b7ba3b";
+const apiKey = 'RGAPI-8c44901a-cc5b-4138-800e-6fd7f2b7ba3b'
 //var lastGameIsWin = 1;
 var aux = 1;
 var region = "euw1";
 const baseUrl = "https://" + region + ".api.riotgames.com";
 var summoner;
-var summonerName = "ZTS TheMalware" //"Grekkø";
+var summonerName = "Grekkø" //"Grekkø";
 //var puuid = "rfxaAA6AhqREAroXvZl3rP5i5_Mzuu5u6EkLYQxBPTE0MtPzhS0MhzmtAG0yxNcs7zwCbwCTFgiYVw";
 
 function setRegion(newRegion) {
