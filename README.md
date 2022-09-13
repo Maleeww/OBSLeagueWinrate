@@ -21,6 +21,9 @@ In order for the code to use your Api Key, modify the src/api.js file and replac
 ## In Progress
 
 > Backend responsible for api calls to avoid providing the api key to the client via the front end.
+
 > Hosting for the project
+
 > Setup capable of modifying configuration
+
 > Better interfaces / More options for interface
