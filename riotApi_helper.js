@@ -1,7 +1,7 @@
 
 // lose = 0
 // win = 1
-const apiKey = 'RGAPI-8c44901a-cc5b-4138-800e-6fd7f2b7ba3b'
+var apiKey = getApiKey();
 //var lastGameIsWin = 1;
 var aux = 1;
 var region = "euw1";
