@@ -28,6 +28,8 @@ window.onload = async function () {
     const params = new URLSearchParams(window.location.search);
     var summonerName = "Grekkø"
     if(params.has('name'))  summonerName = params.get("name")
+    if(params.has('api')){setApiKey(params.get("api"))}  
+
     apiInit(summonerName);
     var changed = false;
     var modify;

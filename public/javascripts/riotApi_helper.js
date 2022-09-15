@@ -21,6 +21,11 @@ function setSummonerName(newName) {
     setSummoner();
 }
 
+function setApiKey(newKey) {
+    apiKey = newKey;
+    console.log("Api key set to: "+apiKey)
+}
+
 async function setSummoner() {
     var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + apiKey;
     const response = await fetch(requestUrl, { mode: 'cors' });
@@ -45,8 +50,18 @@ async function apiGetLastGameId() {
 async function apiCheckLastResult() {
     var gameId = await apiGetLastGameId();
 
+    var found = false;
     var requestUrl = "https://europe.api.riotgames.com/lol/match/v5/matches/" + gameId + "?api_key=" + apiKey;
-    const response = await fetch(requestUrl, { mode: 'cors' });
+    var respuesta;
+    while(!found)
+    //const response = await fetch(requestUrl, { mode: 'cors' });
+    await fetch(requestUrl, { mode: 'cors' }).then(response =>{
+        if (response.ok){
+            respuesta = response;
+            found=true;
+        }else if(response.status==404) found=false;
+    }).catch(error => console.log("Error al buscar"))
+
     var match = await response.json(); //extract JSON from the http response
 
     var players = match["info"]["participants"]
