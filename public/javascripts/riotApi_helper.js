@@ -62,7 +62,7 @@ async function apiCheckLastResult() {
         }else if(response.status==404) found=false;
     }).catch(error => console.log("Error al buscar"))
 
-    var match = await response.json(); //extract JSON from the http response
+    var match = await respuesta.json(); //extract JSON from the http response
 
     var players = match["info"]["participants"]
     console.log(players)
