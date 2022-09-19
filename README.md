@@ -45,3 +45,10 @@ In order for the code to use your Api Key, modify the [src/api.js](https://githu
 > Setup capable of modifying configuration
 
 > Better interfaces / More options for interface
+
+
+## Support me!
+
+Consider supporting the project by donating to my ko-fi :)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/T6T3F4SWY)
