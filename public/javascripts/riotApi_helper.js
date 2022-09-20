@@ -16,71 +16,76 @@ function setRegion(newRegion) {
 }
 
 function setSummonerName(newName) {
-    summonerName = newName;
-    console.log("Summoner set to: "+newName)
-    setSummoner();
+
+        //let summonerName = $('#textoSummonerName').val()
+        console.log(summonerName)
+        
+        fetch('api/setSummonerName', {
+            method:'post',                    
+            redirect : 'follow',
+            mode: 'cors' ,
+            headers : new Headers({'Content-Type':'application/json'}),
+            body: JSON.stringify({'nombre': newName})})
+            .then(resultado => {console.log(resultado)})
+    
 }
 
 function setApiKey(newKey) {
-    apiKey = newKey;
+    let key = $('#textoApiKey').val()
+    console.log(key)
+
+    fetch('api/setApiKey', {
+        method:'post',                    
+        redirect : 'follow',
+        mode: 'cors',
+        headers : new Headers({'Content-Type':'application/json'}),
+        body: JSON.stringify({'api': key})})
+        .then(resultado => {console.log(resultado);})
     console.log("Api key set to: "+apiKey)
 }
+ function apiGetLastGameId() {
+    //let key = $('#textoApiKey').val()
+    //console.log(key)
 
-async function setSummoner() {
-    var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + apiKey;
-    const response = await fetch(requestUrl, { mode: 'cors' });
-    summoner = await response.json(); //extract JSON from the http response
-    puuid = summoner["puuid"]
-    console.log(puuid)
-}
+    return fetch('api/getLastGameId', {
+        method:'get',                    
+        redirect : 'follow',
+        mode: 'cors' 
+        //headers : new Headers({'Content-Type':'application/json'}),
+        //body: JSON.stringify({'api': key})
+    })
+        .then(resultado => {return resultado.json()})
+        .then(resultado => { console.log(resultado); return resultado;}).catch((error) => console.log(error))
 
-async function apiGetLastGameId() {
-
-    var requestUrl = "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=1&api_key=" + apiKey;
-    const response = await fetch(requestUrl, { mode: 'cors' });
-    var gameId = await response.json(); //extract JSON from the http response
-    return gameId;
-    //var summonerName = "Grekkø"
-    // https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Grekk%C3%B8
-    // /lol/summoner/v4/summoners/by-name/{summonerName}
 }
 
 
 
 async function apiCheckLastResult() {
-    var gameId = await apiGetLastGameId();
-
-    var found = false;
-    var requestUrl = "https://europe.api.riotgames.com/lol/match/v5/matches/" + gameId + "?api_key=" + apiKey;
-    var respuesta;
-    while(!found)
-    //const response = await fetch(requestUrl, { mode: 'cors' });
-    await fetch(requestUrl, { mode: 'cors' }).then(response =>{
-        if (response.ok){
-            respuesta = response;
-            found=true;
-        }else if(response.status==404) found=false;
-    }).catch(error => console.log("Error al buscar"))
-
-    var match = await respuesta.json(); //extract JSON from the http response
-
-    var players = match["info"]["participants"]
-    console.log(players)
-    var playerResult;
-    for (var p of players) {
-        if (p["puuid"] == puuid) {
-            console.log(p["summonerName"] + " victory is: " + p["win"])
-            playerResult = p["win"];
-            return playerResult;
-        }
-    }
-    throw 'Error al buscar en la última partida';
+    return fetch('api/apiCheckLastResult', {
+        method:'get',                    
+        redirect : 'follow',
+        mode: 'cors' 
+        //headers : new Headers({'Content-Type':'application/json'}),
+        //body: JSON.stringify({'api': key})
+    })  
+    .then(resultado => {return resultado.json()})
+    .then(resultado => { console.log(resultado); return resultado;}).catch((error) => console.log(error))
 
 
 }
 
 function apiInit(summoner) {
-    //var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName;
-    //summoner = requestUrl;
-    setSummonerName(summoner);
+    return fetch('api/apiInit', {
+        method:'post',                    
+        redirect : 'follow',
+        mode: 'cors',
+        headers : new Headers({'Content-Type':'application/json'}),
+        body: JSON.stringify({'summonerName': summoner})
+    })
+        
+    .then(resultado => {return resultado.json()})
+    .then(resultado => { console.log(resultado[0]); return resultado[0];}).catch((error) => console.log(error))
+
 }
+
