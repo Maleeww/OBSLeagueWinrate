@@ -26,14 +26,14 @@ function sleep(s) {
 // Rating Initialization
 window.onload = async function () {
 
-    let btn_setSM = document.querySelector('#btn-setSummonerName')
+ /*    let btn_setSM = document.querySelector('#btn-setSummonerName')
     btn_setSM.addEventListener('click', function () {
         let nombre = $('#textoSummonerName').val()
 
             console.log(nombre)
             setSummonerName(nombre);
         })
-
+ */
 
     const params = new URLSearchParams(window.location.search);
     var summonerName = "Grekkø"
