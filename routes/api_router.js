@@ -7,15 +7,16 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-//Render usa layouts, en este caso negocios.hbs
-router.get('/getLastGameId', function (req, res, next) {
-  api_helper.getLastGameId()
+//router.get('/getLastGameId', function (req, res, next) {
+router.post('/getLastGameId', function (req, res, next) {
+  api_helper.getLastGameId(req.body.puuid)
     .then(data => { console.log("Last game id: "+data); res.send(data); })
     .catch(error => { console.log(error) })
 });
 
-router.get('/apiCheckLastResult', function (req, res, next) {
-  api_helper.apiCheckLastResult()
+//router.get('/apiCheckLastResult', function (req, res, next) {
+router.post('/apiCheckLastResult', function (req, res, next) {
+  api_helper.apiCheckLastResult(req.body.puuid)
     .then(data => {
       res.send(data); })
 
@@ -52,6 +53,9 @@ router.post('/apiInit', function (req, res, next) {
   // nombre, ciudad, longitud, latitud, telefono
 
   api_helper.apiInit(req.body.summonerName)
+  .then(data => res.send(data))
+  .catch(error => { console.log(error) })
+
 });
 
 

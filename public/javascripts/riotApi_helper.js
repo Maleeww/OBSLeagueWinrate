@@ -9,6 +9,7 @@ const baseUrl = "https://" + region + ".api.riotgames.com";
 var summoner;
 var summonerName = "Grekkø" //"Grekkø";
 //var puuid = "rfxaAA6AhqREAroXvZl3rP5i5_Mzuu5u6EkLYQxBPTE0MtPzhS0MhzmtAG0yxNcs7zwCbwCTFgiYVw";
+var puuid = '0';
 
 function setRegion(newRegion) {
     region = newRegion;
@@ -31,7 +32,8 @@ function setSummonerName(newName) {
 }
 
 function setApiKey(newKey) {
-    let key = $('#textoApiKey').val()
+    let key = newKey;
+	//let key = $('#textoApiKey').val()
     console.log(key)
 
     fetch('api/setApiKey', {
@@ -40,37 +42,37 @@ function setApiKey(newKey) {
         mode: 'cors',
         headers : new Headers({'Content-Type':'application/json'}),
         body: JSON.stringify({'api': key})})
-        .then(resultado => {console.log(resultado);})
+        .then(resultado => {console.log(resultado);}).catch((error) => errorDisplay())
     console.log("Api key set to: "+apiKey)
 }
- function apiGetLastGameId() {
+ function apiGetLastGameId(puuid) {
     //let key = $('#textoApiKey').val()
     //console.log(key)
 
     return fetch('api/getLastGameId', {
-        method:'get',                    
+        method:'post',                    
         redirect : 'follow',
-        mode: 'cors' 
-        //headers : new Headers({'Content-Type':'application/json'}),
-        //body: JSON.stringify({'api': key})
+        mode: 'cors' ,
+        headers : new Headers({'Content-Type':'application/json'}),
+        body: JSON.stringify({'puuid': puuid})
     })
         .then(resultado => {return resultado.json()})
-        .then(resultado => { console.log(resultado); return resultado;}).catch((error) => console.log(error))
+        .then(resultado => { console.log(resultado); return resultado;}).catch((error) => errorDisplay())
 
 }
 
 
 
-async function apiCheckLastResult() {
+async function apiCheckLastResult(puuid) {
     return fetch('api/apiCheckLastResult', {
-        method:'get',                    
+        method:'post',                    
         redirect : 'follow',
-        mode: 'cors' 
-        //headers : new Headers({'Content-Type':'application/json'}),
-        //body: JSON.stringify({'api': key})
+        mode: 'cors' ,
+        headers : new Headers({'Content-Type':'application/json'}),
+        body: JSON.stringify({'puuid': puuid})
     })  
     .then(resultado => {return resultado.json()})
-    .then(resultado => { console.log(resultado); return resultado;}).catch((error) => console.log(error))
+    .then(resultado => { console.log(resultado); return resultado;}).catch((error) => errorDisplay())
 
 
 }
@@ -84,8 +86,8 @@ function apiInit(summoner) {
         body: JSON.stringify({'summonerName': summoner})
     })
         
-    .then(resultado => {return resultado.json()})
-    .then(resultado => { console.log(resultado[0]); return resultado[0];}).catch((error) => console.log(error))
+    .then(resultado => {return resultado.text()})
+    .then(resultado => { console.log(resultado); return resultado;}).catch((error) => errorDisplay())
 
 }
 

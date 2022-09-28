@@ -1,8 +1,10 @@
 
 var lastGameId = '0';
 
+var puuid = '0';
+
 async function check() {
-    var newId = await apiGetLastGameId();
+    var newId = await apiGetLastGameId(puuid);
     if (lastGameId == "0") {
         lastGameId = newId;
         console.log("NewId: "+newId)
@@ -23,6 +25,19 @@ function sleep(s) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+/* function errorDisplay(e){
+
+    let error = document.getElementById('errorText');
+    error.style.display= 'initial';
+
+} */
+function errorDisplay(){
+    let error = document.getElementById('errorText');
+    error.style.display= 'initial';
+}
+
+//window.onerror = errorDisplay()
+
 // Rating Initialization
 window.onload = async function () {
 
@@ -36,11 +51,12 @@ window.onload = async function () {
  */
 
     const params = new URLSearchParams(window.location.search);
-    var summonerName = "Grekkø"
+    var summonerName = "Nissaxter"//"Grekkø"
     if(params.has('name'))  summonerName = params.get("name")
     if(params.has('api')){setApiKey(params.get("api"))}  
-    console.log('1')
-    apiInit(summonerName);
+    puuid =await apiInit(summonerName);
+    if(!puuid) errorDisplay()
+    //console.log(puuid);
     var changed = false;
     var modify;
     var id;
@@ -53,7 +69,7 @@ window.onload = async function () {
         if (changed) {
             changed = false;
 
-            var result = await apiCheckLastResult();
+            var result = await apiCheckLastResult(puuid);
 
             if (result=='1') //result==true, win
                 id = "wins";
