@@ -10,12 +10,13 @@
 </head>
 
 <body>
-    <div class="container body-content"style="border:40px solid transparent;        outline: 50px solid rgb(124, 72, 255);">
+    <div class="container body-content"
+        style="border:40px solid transparent;        outline: 50px solid rgb(124, 72, 255);">
 
 
 
 
-        <div class="container" >
+        <div class="container">
 
 
             <div class="row justify-content-start" style="padding-top:10px;">
@@ -50,12 +51,13 @@
 
             <div class="col" style="padding-top:10px;">
                 <div class="select">
-                    <select name="select-profession" id="select-profession">
+                    <select name="select-profession" id="region">
                         <option value="EUW">EUW</option>
-                       <!--  <option value="NA">NA</option>
                         <option value="LAN">LAN</option>
                         <option value="LAS">LAS</option>
-                        <option value="EUNE">EUNE</option> -->
+                        <option value="NA">NA</option>
+                        <option value="EUNE">EUNE</option> 
+
                     </select>
                 </div>
 
@@ -88,12 +90,13 @@
             </input>
         </div>
         <div class="col" style="padding-top:30px;">
-            <div id="btn-copy" class="button"
-                style="display:none;margin-left: 335px; margin-right:300px; 
+            <div id="btn-copy" class="button" style="display:none;margin-left: 335px; margin-right:300px; 
                 background-color: rgb(192, 124, 255); 
-                border:none; width: 300px; font-size: 20px; height: 65px;font-family: 'Source Sans Pro', sans-serif;"> <div class="popup" onclick="myFunction()">
-  <span class="popuptext" id="myPopup">Copiado al portapapeles</span>
-</div> Copiar al portapapeles</div>
+                border:none; width: 300px; font-size: 20px; height: 65px;font-family: 'Source Sans Pro', sans-serif;">
+                <div class="popup" onclick="myFunction()">
+                    <span class="popuptext" id="myPopup">Copiado al portapapeles</span>
+                </div> Copiar al portapapeles
+            </div>
 
 
         </div>
@@ -227,79 +230,85 @@
         border-radius: 4px;
 
     }
+
     /* Popup container */
-.popup {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
+    .popup {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
 
-/* The actual popup (appears on top) */
-.popup .popuptext {
-  visibility: hidden;
-  width: 160px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: 20px;
-  margin-bottom: 100px;
-}
+    /* The actual popup (appears on top) */
+    .popup .popuptext {
+        visibility: hidden;
+        width: 160px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: 20px;
+        margin-bottom: 100px;
+    }
 
-/* Popup arrow */
-.popup .popuptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: 0px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
+    /* Popup arrow */
+    .popup .popuptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: 0px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+    }
 
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
-.popup .show {
-  visibility: visible;
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s
-}
-
+    /* Toggle this class when clicking on the popup container (hide and show the popup) */
+    .popup .show {
+        visibility: visible;
+        -webkit-animation: fadeIn 1s;
+        animation: fadeIn 1s
+    }
 </style>
 <script>
     let btn_setSM = document.querySelector('#btn-setSummonerName')
     let textbox = document.querySelector('#textbox')
     let btn_copy = document.querySelector("#btn-copy")
     btn_setSM.addEventListener('click', function () {
+
+        var options = ["EUW", "LAN", "LAS", "NA", "EUNE"];
+
         let nombre = $('#textoSummonerName').val()
-        
+        let region = document.getElementById('region').value;
+        console.log(region);
         let apiText = '';
         let apiKey = $('#textoApiKey').val()
-
-        if(apiKey!== "") apiText = '&api='+apiKey;
-
-        let text = 'http://' +window.location.href.split('/')[2] + "/winrate.html?name=" + nombre + apiText;
+        let regionText = '';
+        if (apiKey !== "") apiText = '&api=' + apiKey;
+        if (region !== "") regionText = '&region='+region;
+        let text = 'http://' + window.location.href.split('/')[2] + "/winrate.html?name=" + nombre + regionText+ apiText;
         textbox.style.display = 'initial';
         textbox.value = text;
         //window.location.replace("/winrate.html?name="+nombre)
         btn_copy.style.display = 'inherit';
 
-        
+
     })
-            
-        btn_copy.addEventListener('click', function(){
-            var popup = document.getElementById("myPopup");
-  popup.classList.toggle("show");
-            textbox.select();
-            document.execCommand("copy")        })
+
+    btn_copy.addEventListener('click', function () {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+        textbox.select();
+        document.execCommand("copy")
+    })
 
 
 
 </script>
+
 </html>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>

@@ -4,7 +4,8 @@
 var apiKey = getApiKey();
 //var lastGameIsWin = 1;
 var aux = 1;
-var region = "euw1";
+var xregion = "euw1";
+var xregion2 = "europe"
 const baseUrl = "https://" + region + ".api.riotgames.com";
 var summoner;
 var summonerName = "Grekkø" //"Grekkø";
@@ -12,7 +13,7 @@ var summonerName = "Grekkø" //"Grekkø";
 var puuid = '0';
 
 function setRegion(newRegion) {
-    region = newRegion;
+    xregion = newRegion;
     baseUrl = "https://" + newRegion + ".api.riotgames.com";
 }
 
@@ -45,7 +46,7 @@ function setApiKey(newKey) {
         .then(resultado => {console.log(resultado);}).catch((error) => errorDisplay())
     console.log("Api key set to: "+apiKey)
 }
- function apiGetLastGameId(puuid) {
+ function apiGetLastGameId(puuid, region) {
     //let key = $('#textoApiKey').val()
     //console.log(key)
 
@@ -54,7 +55,7 @@ function setApiKey(newKey) {
         redirect : 'follow',
         mode: 'cors' ,
         headers : new Headers({'Content-Type':'application/json'}),
-        body: JSON.stringify({'puuid': puuid})
+        body: JSON.stringify({'puuid': puuid, 'region': region})
     })
         .then(resultado => {return resultado.json()})
         .then(resultado => { console.log(resultado); return resultado;}).catch((error) => errorDisplay())
@@ -63,13 +64,13 @@ function setApiKey(newKey) {
 
 
 
-async function apiCheckLastResult(puuid) {
+async function apiCheckLastResult(puuid, region) {
     return fetch('api/apiCheckLastResult', {
         method:'post',                    
         redirect : 'follow',
         mode: 'cors' ,
         headers : new Headers({'Content-Type':'application/json'}),
-        body: JSON.stringify({'puuid': puuid})
+        body: JSON.stringify({'puuid': puuid, 'region': region})
     })  
     .then(resultado => {return resultado.json()})
     .then(resultado => { console.log(resultado); return resultado;}).catch((error) => errorDisplay())
@@ -77,13 +78,16 @@ async function apiCheckLastResult(puuid) {
 
 }
 
-function apiInit(summoner) {
+function apiInit(summoner, region) {
+
+    //if(region!=='') setRegion(region);
+
     return fetch('api/apiInit', {
         method:'post',                    
         redirect : 'follow',
         mode: 'cors',
         headers : new Headers({'Content-Type':'application/json'}),
-        body: JSON.stringify({'summonerName': summoner})
+        body: JSON.stringify({'summonerName': summoner, 'region': region})
     })
         
     .then(resultado => {return resultado.text()})

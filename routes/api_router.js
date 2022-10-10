@@ -9,14 +9,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //router.get('/getLastGameId', function (req, res, next) {
 router.post('/getLastGameId', function (req, res, next) {
-  api_helper.getLastGameId(req.body.puuid)
+  api_helper.getLastGameId(req.body.puuid, req.body.region)
     .then(data => { console.log("Last game id: "+data); res.send(data); })
     .catch(error => { console.log(error) })
 });
 
 //router.get('/apiCheckLastResult', function (req, res, next) {
 router.post('/apiCheckLastResult', function (req, res, next) {
-  api_helper.apiCheckLastResult(req.body.puuid)
+  api_helper.apiCheckLastResult(req.body.puuid, req.body.region)
     .then(data => {
       res.send(data); })
 
@@ -52,7 +52,7 @@ router.post('/apiInit', function (req, res, next) {
   //let region = req.body.region
   // nombre, ciudad, longitud, latitud, telefono
 
-  api_helper.apiInit(req.body.summonerName)
+  api_helper.apiInit(req.body.summonerName, req.body.region)
   .then(data => res.send(data))
   .catch(error => { console.log(error) })
 

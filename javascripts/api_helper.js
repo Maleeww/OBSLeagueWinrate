@@ -1,6 +1,24 @@
 var api = require('./api.js') //js?
 var fetch = require('node-fetch')
 
+var dictRegionLocal = new Object();
+dictRegionLocal["EUW"] = "euw1";
+dictRegionLocal["EUNE"] = "eune1";
+dictRegionLocal["LAS"] = "la2"
+dictRegionLocal["LAN"] = "la1"
+dictRegionLocal["NA"] = "na1"
+
+var dictRegionUniversal = new Object();
+dictRegionUniversal["EUW"] = "europe";
+dictRegionUniversal["EUNE"] = "europe";
+dictRegionUniversal["LAN"] = "americas"
+dictRegionUniversal["LAS"] = "americas"
+dictRegionUniversal["NA"] = "americas"
+
+// LAN = LA1
+// LAS = LA2
+
+
 // lose = 0
 // win = 1
 var apiKey = api.getApiKey();
@@ -30,16 +48,16 @@ function setApiKey(newKey) {
 }
 
 async function setSummoner() {
-    var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + apiKey;
+    var requestUrl = "https://" + region + ".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + apiKey;
     const response = await fetch(requestUrl, { mode: 'cors' });
     summoner = await response.json(); //extract JSON from the http response
     //puuid = summoner["puuid"]
 }
 
-async function getLastGameId(puuid) {
+async function getLastGameId(puuid, regionVar) {
     //await console.log(puuid);
-
-    var requestUrl = "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=1&api_key=" + apiKey;
+    // matches by puuid usa universal
+    var requestUrl = "https://"+ dictRegionUniversal[regionVar] +".api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=1&api_key=" + apiKey;
     const response = await fetch(requestUrl, { mode: 'cors' });
     var gameId = await response.json(); //extract JSON from the http response
     return gameId;
@@ -50,11 +68,12 @@ async function getLastGameId(puuid) {
 
 
 
-async function apiCheckLastResult(puuid) {
-    var gameId = await getLastGameId(puuid);
+async function apiCheckLastResult(puuid, regionVar) {
+    var gameId = await getLastGameId(puuid, regionVar);
 
     var found = false;
-    var requestUrl = "https://europe.api.riotgames.com/lol/match/v5/matches/" + gameId + "?api_key=" + apiKey;
+    // Match by gameid usa universal
+    var requestUrl = "https://"+ dictRegionUniversal[regionVar] +".api.riotgames.com/lol/match/v5/matches/" + gameId + "?api_key=" + apiKey;
     var respuesta;
     while (!found)
         //const response = await fetch(requestUrl, { mode: 'cors' });
@@ -82,19 +101,21 @@ async function apiCheckLastResult(puuid) {
 
 }
 
-async function getPuuid(summ){
-    var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summ + "?api_key=" + apiKey;
+async function getPuuid(summ, regionVar){
+    // GetPuuid usa local
+    var requestUrl = "https://" + dictRegionLocal[regionVar] + ".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/" + summ + "?api_key=" + apiKey;
     const response = await fetch(requestUrl, { mode: 'cors' });
     summoner = await response.json(); //extract JSON from the http response
+    console.log('Level: '+summoner["summonerLevel"])
     return summoner["puuid"];
 
 }
 
-function apiInit(summ) {
+function apiInit(summ, regionVar) {
     //var requestUrl = baseUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName;
     //summoner = requestUrl;
     //setSummonerName(summ);
-    return getPuuid(summ);
+    return getPuuid(summ, regionVar);
 }
 
 

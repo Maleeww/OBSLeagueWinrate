@@ -3,8 +3,10 @@ var lastGameId = '0';
 
 var puuid = '0';
 
+var region = 'EUW';
+
 async function check() {
-    var newId = await apiGetLastGameId(puuid);
+    var newId = await apiGetLastGameId(puuid, region);
     if (lastGameId == "0") {
         lastGameId = newId;
         console.log("NewId: "+newId)
@@ -53,8 +55,10 @@ window.onload = async function () {
     const params = new URLSearchParams(window.location.search);
     var summonerName = "Nissaxter"//"Grekkø"
     if(params.has('name'))  summonerName = params.get("name")
-    if(params.has('api')){setApiKey(params.get("api"))}  
-    puuid =await apiInit(summonerName);
+    if(params.has('api')){setApiKey(params.get("api"))}
+    if(params.has('region')){region = params.get("region")} 
+    console.log("Region = "+region)   
+    puuid =await apiInit(summonerName, region);
     if(!puuid) errorDisplay()
     //console.log(puuid);
     var changed = false;
@@ -63,13 +67,15 @@ window.onload = async function () {
     //espera 30s
     //setTimeout(changed = check(), 30000);  
     while (true) {
-        console.log('2')
-        await sleep(3); // segundos
+        var espera = 5;
+        console.log('espera ' + espera + ' segundos');
+
+        await sleep(espera); // segundos
         changed = await check();
         if (changed) {
             changed = false;
 
-            var result = await apiCheckLastResult(puuid);
+            var result = await apiCheckLastResult(puuid, region);
 
             if (result=='1') //result==true, win
                 id = "wins";
