@@ -7,27 +7,17 @@
 
 ## Usage
 
-For now only locally available. Open index.html file with OBS Browser Source. To modify the default Summoner Name simply add yours as a query parameter (name parameter).
+~~For now only locally available. Open index.html file with OBS Browser Source. To modify the default Summoner Name simply add yours as a query parameter (name parameter).~~
+
+Current version is developed for nodejs and express.
+
+You can also use the local html one by going to the older branch.
+Simply use it like this
 
 > file:///C:/OBSLeagueWinrate/src/index.html?name=My Summoner Name
  
 Modify the path according to your folder structure, this example is made assuming it's been cloned on the root of the C: drive.
 
-## GitHub Pages
-
-Temporarily you could use the GitHub pages version. As I can't leave my api on the files, I made a custom URL query so you can provide your own API.
-
-Go to https://maleeww.github.io/OBSLeagueWinrate/public/index.html
-
-By default there's no API key, and there's a default summoner name. Use your custom name and Api Key with:
-
-> ?name=Name&api=APIKEY
-
-So it should look something like this
-
-https://maleeww.github.io/OBSLeagueWinrate/public/index.html?name=MyName&api=RG-1234-5678-1234
-
-Only for EUW for now.
 
 ## API Key
 
@@ -36,11 +26,11 @@ In order for the code to use your Api Key, modify the [src/api.js](https://githu
 
 ## In Progress
 
-> Custom region
+> ~~Custom region~~
 
-> Backend responsible for api calls to avoid providing the api key to the client via the front end.
+> ~~Backend responsible for api calls to avoid providing the api key to the client via the front end.~~
 
-> Hosting for the project
+> ~~Hosting for the project~~
 
 > Setup capable of modifying configuration
 
