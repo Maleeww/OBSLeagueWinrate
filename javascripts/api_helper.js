@@ -85,10 +85,11 @@ async function apiCheckLastResult(puuid, regionVar) {
         }).catch(error => console.log("Error al buscar"))
 
     var match = await respuesta.json(); //extract JSON from the http response
-
+    let timeDuration = match["info"]["gameDuration"]
     var players = match["info"]["participants"]
     //console.log(players)
     var playerResult;
+    if(timeDuration > 240){
     for (var p of players) {
         if (p["puuid"] == puuid) {
             console.log(p["summonerName"] + " victory is: " + p["win"])
@@ -97,8 +98,12 @@ async function apiCheckLastResult(puuid, regionVar) {
         }
     }
     throw 'Error al buscar en la última partida';
-
-
+}
+//Si no es mayor de 240 (4 minutos)
+else {
+    console.log("Game was remade with "+timeDuration+" seconds")
+    return timeDuration;
+}
 }
 
 async function getPuuid(summ, regionVar){

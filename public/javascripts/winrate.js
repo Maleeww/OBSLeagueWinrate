@@ -79,12 +79,17 @@ window.onload = async function () {
 
             if (result=='1') //result==true, win
                 id = "wins";
-            else id = "losses";
+            else if(result=='0') id = "losses";
+            //if(result>1) será remake
+            else id = "remake"
 
+            // Si no es remake, se añade a derrotas o victorias
+            if(id!="remake"){
             modify = document.getElementById(id);
             var actual = parseInt(modify.innerHTML)
             actual = actual + 1;
             modify.innerHTML = actual;
+        }
         }
     }
 };
