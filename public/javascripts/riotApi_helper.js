@@ -8,7 +8,7 @@ var xregion = "euw1";
 var xregion2 = "europe"
 const baseUrl = "https://" + region + ".api.riotgames.com";
 var summoner;
-var summonerName = "Grekkø" //"Grekkø";
+//var summonerName = "Grekkø" //"Grekkø";
 //var puuid = "rfxaAA6AhqREAroXvZl3rP5i5_Mzuu5u6EkLYQxBPTE0MtPzhS0MhzmtAG0yxNcs7zwCbwCTFgiYVw";
 var puuid = '0';
 
@@ -46,6 +46,7 @@ function setApiKey(newKey) {
         .then(resultado => {console.log(resultado);}).catch((error) => errorDisplay())
     console.log("Api key set to: "+apiKey)
 }
+
  function apiGetLastGameId(puuid, region) {
     //let key = $('#textoApiKey').val()
     //console.log(key)

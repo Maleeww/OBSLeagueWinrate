@@ -21,8 +21,10 @@ while(!isQueueEmpty("Nissaxter")) //si no está vacía
 
 */
 
-function isQueueEmpty(nombre){
-    return !Object.entries(dictCola[nombre]).length>0;
+function queueSize(nombre){
+    console.log(nombre)
+    return Object.entries(dictCola[nombre]).length;
+
 }
 
 function consume(nombre){
@@ -37,7 +39,9 @@ function win(id) {
 
 function lose(id) {
     let user = dictId[id]
+    console.log(user)
     dictCola[user].push(-1);
+    return 0;
 }
 
 function reset(id){
@@ -46,10 +50,9 @@ function reset(id){
 }
 
 
-exports.getLastGameId = getLastGameId;
+exports.queueSize = queueSize;
 
-exports.apiInit = apiInit;
-exports.apiCheckLastResult = apiCheckLastResult;
-exports.setApiKey = setApiKey;
-exports.setSummonerName = setSummonerName;
-exports.setRegion = setRegion;
+exports.consume = consume;
+exports.win = win;
+exports.lose = lose;
+exports.reset = reset;
