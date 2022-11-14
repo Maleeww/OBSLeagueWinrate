@@ -5,10 +5,12 @@ var puuid = '0';
 
 var region = 'EUW';
 var summonerName = "Nissaxter";
+var idQueue = '';
 
 async function check() {
 
-    if(summonerName=="Nissaxter") checkQueue(summonerName);
+    //if(summonerName=="Nissaxter") checkQueue(summonerName);
+    if(idQueue!='') checkQueue(idQueue);
 
     var newId = await apiGetLastGameId(puuid, region);
     if (lastGameId == "0") {
@@ -79,9 +81,11 @@ window.onload = async function () {
 
     const params = new URLSearchParams(window.location.search);
     var summonerName = "Nissaxter"//"Grekkø"
+    idQueue = '';
     if(params.has('name'))  summonerName = params.get("name")
     if(params.has('api')){setApiKey(params.get("api"))}
     if(params.has('region')){region = params.get("region")} 
+    if(params.has('id')){idQueue = params.get("id")}
     console.log("Region = "+region)   
     puuid =await apiInit(summonerName, region);
     if(!puuid) errorDisplay()

@@ -48,6 +48,16 @@ router.get('/reset', function (req, res, next) {
 
 });
 
+router.post('/registrarID', function (req, res, next) {
+
+  //let result = adjust_helper.registrarID(req.query.id)
+  //.then(data => res.send(data))
+  //.catch(error => { console.log(error); console.error(error) })
+  res.send(''+adjust_helper.registrarID(req.query.id))
+
+
+})
+
 // 9f9c73d.online-server.cloud:25564/api/win?id=NSX
 
 

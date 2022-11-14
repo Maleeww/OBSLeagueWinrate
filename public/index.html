@@ -36,6 +36,21 @@
 
 
             </div>
+
+
+            <div class="row justify-content-start" style="padding-top:30px;">
+                <label style="font-size: 36px;">ID StreamDeck integration (opcional)</label>
+            </div>
+            <div class="row justify-content-center" style="padding-top:10px;">
+                <input id="textoID" class="input" type="text" placeholder="12345"></input>
+            </div>
+            <div class="row justify-content-start" style="padding-top:10px;">
+                <label style="font-size: 15px; padding-top:5px; padding-right: 5px;">¿Aún no tienes ID? </label>
+                <a href="/registrarID.html" style="font-size: 18px;"> Regístrala</a>
+
+
+
+            </div>
         </div>
         <div class="row justify-content-start" style="padding-top:10px;">
 
@@ -56,7 +71,7 @@
                         <option value="LAN">LAN</option>
                         <option value="LAS">LAS</option>
                         <option value="NA">NA</option>
-                        <option value="EUNE">EUNE</option> 
+                        <option value="EUNE">EUNE</option>
 
                     </select>
                 </div>
@@ -283,14 +298,18 @@
         var options = ["EUW", "LAN", "LAS", "NA", "EUNE"];
 
         let nombre = $('#textoSummonerName').val()
+        let id = $('#textoID').val()
+
         let region = document.getElementById('region').value;
         console.log(region);
         let apiText = '';
         let apiKey = $('#textoApiKey').val()
         let regionText = '';
+        let IDText = '';
         if (apiKey !== "") apiText = '&api=' + apiKey;
-        if (region !== "") regionText = '&region='+region;
-        let text = 'http://' + window.location.href.split('/')[2] + "/winrate.html?name=" + nombre + regionText+ apiText;
+        if (region !== "") regionText = '&region=' + region;
+        if (id !== "") IDText = '&id=' + id;
+        let text = 'http://' + window.location.href.split('/')[2] + "/winrate.html?name=" + nombre + regionText + apiText + IDText;
         textbox.style.display = 'initial';
         textbox.value = text;
         //window.location.replace("/winrate.html?name="+nombre)
