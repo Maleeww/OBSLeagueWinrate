@@ -18,7 +18,7 @@ router.post('/getLastGameId', function (req, res, next) {
 router.post('/apiCheckLastResult', function (req, res, next) {
   api_helper.apiCheckLastResult(req.body.puuid, req.body.region)
     .then(data => {
-      res.send(data); })
+      res.send(''+data); })
 
     
     .catch(error => { console.log(error) })

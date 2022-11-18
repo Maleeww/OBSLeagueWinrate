@@ -81,7 +81,7 @@ window.onload = async function () {
 
     const params = new URLSearchParams(window.location.search);
     var summonerName = "Nissaxter"//"Grekkø"
-    idQueue = '';
+    idQueue = 'NSX';
     if(params.has('name'))  summonerName = params.get("name")
     if(params.has('api')){setApiKey(params.get("api"))}
     if(params.has('region')){region = params.get("region")} 
