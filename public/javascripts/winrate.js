@@ -70,18 +70,10 @@ function resetCounter(){
 // Rating Initialization
 window.onload = async function () {
 
- /*    let btn_setSM = document.querySelector('#btn-setSummonerName')
-    btn_setSM.addEventListener('click', function () {
-        let nombre = $('#textoSummonerName').val()
 
-            console.log(nombre)
-            setSummonerName(nombre);
-        })
- */
 
     const params = new URLSearchParams(window.location.search);
     var summonerName = "Nissaxter"//"Grekkø"
-    idQueue = 'NSX';
     if(params.has('name'))  summonerName = params.get("name")
     if(params.has('api')){setApiKey(params.get("api"))}
     if(params.has('region')){region = params.get("region")} 
@@ -97,7 +89,7 @@ window.onload = async function () {
     //setTimeout(changed = check(), 30000);  
     while (true) {
         var espera = 5;
-        if(summonerName=="Nissaxter") espera = 2;
+        if(summonerName=="Nissaxter") espera = 3;
         console.log('espera ' + espera + ' segundos');
 
         await sleep(espera); // segundos

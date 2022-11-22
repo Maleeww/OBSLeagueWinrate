@@ -66,7 +66,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 
 	try {
-		await command.execute(interaction);
+		await command.execute(interaction,client);
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
@@ -157,22 +157,6 @@ client.on('messageCreate', async msg => {
     }
 });
 
-client.on(Events.InteractionCreate, interaction => {
-    if (!interaction.isButton()) return;
-    console.log(interaction);
-    switch(interaction.customId){
-        case CUSTOM_ID_BOTON_AZUL:
-            ganaAzul();
-            break;
-        case CUSTOM_ID_BOTON_ROJO:
-            ganaRojo();
-            break;
-        case CUSTOM_ID_BOTON_CANCELAR:
-            cancelarPrediccion()
-            break;
-    }
-    interaction.update({content:'a'})
-});
 
 
 function ganaAzul(){
@@ -204,3 +188,4 @@ function cancelarPrediccion(){
                 })
 } */
 
+exports.client = client

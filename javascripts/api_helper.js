@@ -19,27 +19,24 @@ dictRegionUniversal["NA"] = "americas"
 // LAS = LA2
 
 
-// lose = 0
-// win = 1
 var apiKey = api.getApiKey();
-//var lastGameIsWin = 1;
 var aux = 1;
 var region = "euw1";
 const baseUrl = "https://" + region + ".api.riotgames.com";
 var summoner;
 var summonerName = "Grekkø" //"Grekkø";
-//var puuid;
-//var puuid = "rfxaAA6AhqREAroXvZl3rP5i5_Mzuu5u6EkLYQxBPTE0MtPzhS0MhzmtAG0yxNcs7zwCbwCTFgiYVw";
 
-function setRegion(newRegion) {
-    region = newRegion;
-    baseUrl = "https://" + newRegion + ".api.riotgames.com";
-}
 
-function setSummonerName(newName) {
-    summonerName = newName;
-    console.log("Summoner set to: " + newName)
-    setSummoner();
+async function fetchAPI(requestUrl,header){
+    try{
+        return await fetch(requestUrl,header)
+    }
+    catch(error){
+        console.error(error)
+        // Retry
+        return await fetchAPI(requestUrl, header)
+    }
+    
 }
 
 function setApiKey(newKey) {
@@ -47,18 +44,12 @@ function setApiKey(newKey) {
     console.log("Api key set to: " + apiKey)
 }
 
-async function setSummoner() {
-    var requestUrl = "https://" + region + ".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + apiKey;
-    const response = await fetch(requestUrl, { mode: 'cors' });
-    summoner = await response.json(); //extract JSON from the http response
-    //puuid = summoner["puuid"]
-}
 
 async function getLastGameId(puuid, regionVar) {
     //await console.log(puuid);
     // matches by puuid usa universal
     var requestUrl = "https://"+ dictRegionUniversal[regionVar] +".api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=1&api_key=" + apiKey;
-    const response = await fetch(requestUrl, { mode: 'cors' });
+    const response = await fetchAPI(requestUrl, { mode: 'cors' });
     var gameId = await response.json(); //extract JSON from the http response
     return gameId;
     //var summonerName = "Grekkø"
@@ -77,12 +68,12 @@ async function apiCheckLastResult(puuid, regionVar) {
     var respuesta;
     while (!found)
         //const response = await fetch(requestUrl, { mode: 'cors' });
-        await fetch(requestUrl, { mode: 'cors' }).then(response => {
+        await fetchAPI(requestUrl, { mode: 'cors' }).then(response => {
             if (response.ok) {
                 respuesta = response;
                 found = true;
             } else if (response.status == 404) found = false;
-        }).catch(error => console.log("Error al buscar"))
+        }).catch(error => {console.log("Error al buscar"); console.error(error)})
 
     var match = await respuesta.json(); //extract JSON from the http response
     let timeDuration = match["info"]["gameDuration"]
@@ -129,5 +120,3 @@ exports.getLastGameId = getLastGameId;
 exports.apiInit = apiInit;
 exports.apiCheckLastResult = apiCheckLastResult;
 exports.setApiKey = setApiKey;
-exports.setSummonerName = setSummonerName;
-exports.setRegion = setRegion;
