@@ -14,6 +14,14 @@ router.post('/getLastGameId', function (req, res, next) {
     .catch(error => { console.log(error) })
 });
 
+
+router.post('/isPlayingById', function (req, res, next) {
+  api_helper.isPlayingById(req.body.id, req.body.region)
+    .then(data => {
+      res.send(''+data); })
+    .catch(error => { console.log(error) })
+});
+
 //router.get('/apiCheckLastResult', function (req, res, next) {
 router.post('/apiCheckLastResult', function (req, res, next) {
   api_helper.apiCheckLastResult(req.body.puuid, req.body.region)
@@ -46,6 +54,17 @@ router.post('/setRegion', function (req, res, next) {
 
   return api_helper.setRegion(region)
     .catch(error => { console.log(error) })
+});
+
+
+router.post('/getEncryptedId', function (req, res, next) {
+  //let region = req.body.region
+  // nombre, ciudad, longitud, latitud, telefono
+
+  api_helper.getEncryptedId(req.body.summonerName, req.body.region)
+  .then(data => {console.log(data);res.send(data)})
+  .catch(error => { console.log(error) })
+
 });
 
 router.post('/apiInit', function (req, res, next) {

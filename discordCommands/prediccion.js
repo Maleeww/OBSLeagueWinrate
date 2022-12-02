@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } = require('discord.js');
+var twitch = require('../twitchActions.js');
 
 const CUSTOM_ID_BOTON_AZUL = 'boton_resultado_azul'
 const CUSTOM_ID_BOTON_ROJO = 'boton_resultado_rojo'
@@ -7,6 +8,9 @@ const CUSTOM_ID_BOTON_CANCELAR = 'boton_resultado_cancelar'
 const CUSTOM_ID_BOTON_CONFIRMAR = 'boton_confirmar'
 const CUSTOM_ID_BOTON_NO_CONFIRMAR = 'boton_no_confirmar'
 
+var rolesPermitidos = ['1047452799627178046','928466515001499659']
+var canalesPermitidos = ['1045374650298941450']
+
 var botones;
 var func;
 var inter;
@@ -14,6 +18,22 @@ var author;
 var resultado;
 var resAz;
 var resRo;
+
+function permitido(interaction){
+    //console.log(interaction)
+
+    let colecRoles = interaction.member._roles;
+    let canal = interaction.channelId;
+    if(canalesPermitidos.includes(canal))
+    for(let r=0;r<colecRoles.length;r++){
+        if(rolesPermitidos.includes(colecRoles[r]))
+            return true;
+    }  
+
+
+    return false;
+}
+
 
 
 async function crearPrediccion(user, titulo, resAzul, resRojo) {
@@ -108,7 +128,7 @@ async function pedirConfirmacion(funcion, client, interaction) {
 async function startEventListener(client, interaction) {
     client.on(Events.InteractionCreate, interaction => {
         if (!interaction.isButton()) return;
-        console.log(interaction);
+        //console.log(interaction);
         switch (interaction.customId) {
             case CUSTOM_ID_BOTON_AZUL:
                 pedirConfirmacion(ganaAzul, client, interaction);
@@ -146,6 +166,11 @@ module.exports = {
         .addStringOption(option => option.setName('resultado_rojo').setDescription('Resultado rojo de la predicción').setRequired(true))
         .setDescription('Replies with Pong!'),
     async execute(interaction, client) {
+        if(!permitido(interaction)) {
+            // ephemeral = Solo se le muestra al usuario que ha hecho la interacción.
+            interaction.reply({content: '`No tienes permiso para ejecutar este comando`', ephemeral:true})
+            return false;
+        };
         startEventListener(client, interaction)
         inter = interaction;
 
@@ -161,6 +186,8 @@ module.exports = {
 
         const botonesResultado = await crearBotones(resAzul, resRojo)
         botones = botonesResultado;
+        let resp = twitch.sendAnnouncement(titulo);
+        console.log(await resp)
         //const botonesConfirmar = await crearBotonesConfirmar();
         let reply = await interaction.reply({ embeds: [embedPrediccion], components: [botonesResultado] })
 

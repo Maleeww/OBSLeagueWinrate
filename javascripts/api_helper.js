@@ -97,6 +97,24 @@ else {
 }
 }
 
+async function isPlayingBySummonerName(summ){
+    // cloud nine
+    let id = getEncryptedId(summ);
+    return isPlayingById(id);
+}
+
+async function isPlayingById(id, regionVar){
+    // cloud nine
+    var requestUrl = "https://" + dictRegionLocal[regionVar] + ".api.riotgames.com" + "/lol/spectator/v4/active-games/by-summoner/" + id + "?api_key=" + apiKey;
+    const response = await fetch(requestUrl, { mode: 'cors' });
+    console.log('Status: '+response.status)
+    let status = await response.status; //extract JSON from the http response
+    //https://euw1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/tRk13snzDy0HyHKUM4XFad8GcrqtKuA4WHNbpYbMiE2BqZQ?api_key=RGAPI-1f15d384-3646-4af8-8089-ff66cf5c8675
+    if(status==200) return '1';
+    else return '0';
+
+}
+
 async function getPuuid(summ, regionVar){
     // GetPuuid usa local
     var requestUrl = "https://" + dictRegionLocal[regionVar] + ".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/" + summ + "?api_key=" + apiKey;
@@ -104,6 +122,16 @@ async function getPuuid(summ, regionVar){
     summoner = await response.json(); //extract JSON from the http response
     console.log('Level: '+summoner["summonerLevel"])
     return summoner["puuid"];
+
+}
+
+async function getEncryptedId(summ, regionVar){
+    // GetPuuid usa local
+    var requestUrl = "https://" + dictRegionLocal[regionVar] + ".api.riotgames.com" + "/lol/summoner/v4/summoners/by-name/" + summ + "?api_key=" + apiKey;
+    const response = await fetch(requestUrl, { mode: 'cors' });
+    summoner = await response.json(); //extract JSON from the http response
+    console.log('Id: '+summoner["id"])
+    return summoner["id"];
 
 }
 
@@ -118,5 +146,12 @@ function apiInit(summ, regionVar) {
 exports.getLastGameId = getLastGameId;
 
 exports.apiInit = apiInit;
+
+exports.getPuuid = getPuuid;
+
+exports.isPlayingById = isPlayingById
+
+exports.getEncryptedId = getEncryptedId;
+
 exports.apiCheckLastResult = apiCheckLastResult;
 exports.setApiKey = setApiKey;

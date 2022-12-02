@@ -1,12 +1,19 @@
 {
   "dependencies": {
+    "@twurple/api": "^5.2.7",
+    "@twurple/auth": "^5.2.7",
+    "@twurple/chat": "^5.2.7",
+    "@twurple/eventsub": "^5.2.7",
     "deepar": "^4.0.3",
+    "discord-api-types": "^0.37.20",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongodb": "^4.12.0",
     "node-fetch": "^2.6.7",
-    "tmi.js": "^1.5.0"
+    "tmi.js": "^1.5.0",
+    "twitch-auth": "^4.6.7",
+    "twitch-chat-client": "^4.6.7"
   },
   "devDependencies": {
     "webpack": "^5.75.0",
